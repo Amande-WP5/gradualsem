@@ -1,30 +1,29 @@
 module Gradualsem
   class Node
-    attr_accessor :sim, :attacking, :attackers, :supporting, :supporters, :default_value
+    attr_accessor :attacking, :attackers, :similar, :default_value
 
     def initialize(default_value=0.0)
       @sim = new Hash(0.0)
       @attacking = []
       @attackers = []
-      @supporting = []
-      @supporters = []
       @default_value = default_value
     end
 
-    def add_attacking(*node)
-      @attacking += *node
+    def add_attacking(*nodes)
+      @attacking += *nodes
     end
 
-    def add_attackers(*node)
-      @attackers += *node
+    def add_attackers(*nodes)
+      @attackers += *nodes
     end
 
-    def add_supporting(*node)
-      @supporting += *node
+    def add_similar(node, value)
+      @similar[node] = value
+      node.@similar[self] = value
     end
 
-    def add_supporters(*node)
-      @supporters += *node
+    def value
+      @default_value
     end
   end
 end
