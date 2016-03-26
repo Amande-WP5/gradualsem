@@ -1,15 +1,13 @@
-require "set"
-
 module Gradualsem
   class Graph
     attr_accessor :nodes
 
-    def initialize
-      @nodes = {}
+    def initialize(*node)
+      @nodes = node
     end
 
     def add_nodes(*node)
-      @nodes += *node
+      @nodes += node
     end
 
     def load_from_file(filename)
@@ -42,6 +40,6 @@ module Gradualsem
           end
         end
       end
-    end
-  end
-end
+#    end
+#  end
+#end
