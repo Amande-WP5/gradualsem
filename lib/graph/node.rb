@@ -1,9 +1,10 @@
 module Gradualsem
   class Node
-    attr_reader :attackers, :attacked, :similar
+    attr_reader :attackers, :attacked, :similar, :name
     attr_accessor :value
 
-    def initialize(default_value=0.0)
+    def initialize(name, default_value=0.0)
+      @name = name
       @similar = Hash.new(0.0)
       @attacked  = []
       @attackers = []
@@ -22,6 +23,10 @@ module Gradualsem
     def add_similar(node, value)
       @similar[node] = value
       node.similar[self] = value
+    end
+
+    def to_s
+      @name
     end
   end
 end

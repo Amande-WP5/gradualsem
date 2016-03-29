@@ -10,11 +10,11 @@ module Gradualsem
   #      -> d -----
 
   # Arguments construction
-  a = Gradualsem::Node.new(1.0)
-  b = Gradualsem::Node.new(1.0)
-  c = Gradualsem::Node.new(1.0)
-  d = Gradualsem::Node.new(1.0)
-  e = Gradualsem::Node.new(1.0)
+  a = Gradualsem::Node.new("a", 1.0)
+  b = Gradualsem::Node.new("b", 1.0)
+  c = Gradualsem::Node.new("c", 1.0)
+  d = Gradualsem::Node.new("d", 1.0)
+  e = Gradualsem::Node.new("e", 1.0)
 
   # Graph building (useless if arguments are manually built)
   graph = Gradualsem::Graph.new(a,b,c,d,e)
