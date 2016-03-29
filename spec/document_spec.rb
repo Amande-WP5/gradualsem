@@ -13,9 +13,6 @@ module Gradualsem
       @a2.add_attackers(@b2, @c2)
       @b2.add_similar(@c2, 0.6)
 
-      @semSAF = Semantics.new(@@agg_prod, @@g_simple, @@h1_proba_tconorm, @@h2_avg)
-      @semBH  = Semantics.new(@@agg_prod, @@g_cat, @@h1_cat, @@h2_avg)
-
       @a3 = Node.new("a", 0.999)
       @b3 = Node.new("b", 0.999)
       @c3 = Node.new("c", 0.999)
@@ -30,6 +27,11 @@ module Gradualsem
       @semSAFProd = Semantics.new(@@agg_prod, @@g_simple, @@h1_proba_tconorm, @@h2_avg)
       @semBHAvg   = Semantics.new(@@agg_avg, @@g_cat, @@h1_cat, @@h2_avg)
       @semBHProd  = Semantics.new(@@agg_prod, @@g_cat, @@h1_cat, @@h2_avg)
+
+      @semSAFAvgPTco  = Semantics.new(@@agg_avg, @@g_simple, @@h1_proba_tconorm, @@h2_proba_tconorm)
+      @semBHAvgPTco   = Semantics.new(@@agg_avg, @@g_cat, @@h1_cat, @@h2_proba_tconorm)
+      @semSAFProdPTco  = Semantics.new(@@agg_prod, @@g_simple, @@h1_proba_tconorm, @@h2_proba_tconorm)
+      @semBHProdPTco   = Semantics.new(@@agg_prod, @@g_cat, @@h1_cat, @@h2_proba_tconorm)
     end
 
     context "when using case 1" do
@@ -37,20 +39,20 @@ module Gradualsem
         context "when 0.1 0.9 example" do
           it "computes S properly" do
             exp = 0.35
-            s   = @semSAF.computeS(@a, @b)
-            s2  = @semSAF.computeS(@a, @b)
-            s3  = @semBH.computeS(@a, @b)
-            s4  = @semBH.computeS(@a, @b)
-            expect(s).to eq(exp)
-            expect(s2).to eq(exp)
-            expect(s3).to eq(exp)
-            expect(s4).to eq(exp)
+            s   = @semSAFAvg.computeS(@a, @b)
+            s2  = @semSAFAvg.computeS(@a, @b)
+            s3  = @semBHAvg.computeS(@a, @b)
+            s4  = @semBHAvg.computeS(@a, @b)
+            expect(s).to be_within(0.01).of(exp)
+            expect(s2).to be_within(0.01).of(exp)
+            expect(s3).to be_within(0.01).of(exp)
+            expect(s4).to be_within(0.01).of(exp)
           end
 
           context "when using SAF" do
             it "computes V properly" do
               exp = 0.42
-              v = @semSAF.computeV(@a)
+              v = @semSAFAvg.computeV(@a)
               expect(v).to be_within(0.01).of(exp)
             end
           end
@@ -58,7 +60,7 @@ module Gradualsem
           context "when using BH" do
             it "computes V properly" do
               exp = 0.59
-              v = @semBH.computeV(@a)
+              v = @semBHAvg.computeV(@a)
               expect(v).to be_within(0.01).of(exp)
             end
           end
@@ -67,20 +69,20 @@ module Gradualsem
         context "when 0.5 0.5 example" do
           it "computes S properly" do
             exp = 0.35
-            s   = @semSAF.computeS(@a2, @b2)
-            s2  = @semSAF.computeS(@a2, @b2)
-            s3  = @semBH.computeS(@a2, @b2)
-            s4  = @semBH.computeS(@a2, @b2)
-            expect(s).to eq(exp)
-            expect(s2).to eq(exp)
-            expect(s3).to eq(exp)
-            expect(s4).to eq(exp)
+            s   = @semSAFAvg.computeS(@a2, @b2)
+            s2  = @semSAFAvg.computeS(@a2, @b2)
+            s3  = @semBHAvg.computeS(@a2, @b2)
+            s4  = @semBHAvg.computeS(@a2, @b2)
+            expect(s).to be_within(0.01).of(exp)
+            expect(s2).to be_within(0.01).of(exp)
+            expect(s3).to be_within(0.01).of(exp)
+            expect(s4).to be_within(0.01).of(exp)
           end
 
           context "when using SAF" do
             it "computes V properly" do
               exp = 0.42
-              v = @semSAF.computeV(@a2)
+              v = @semSAFAvg.computeV(@a2)
               expect(v).to be_within(0.01).of(exp)
             end
           end
@@ -88,7 +90,7 @@ module Gradualsem
           context "when using BH" do
             it "computes V properly" do
               exp = 0.59
-              v = @semBH.computeV(@a2)
+              v = @semBHAvg.computeV(@a2)
               expect(v).to be_within(0.01).of(exp)
             end
           end
@@ -165,5 +167,131 @@ module Gradualsem
         end # context product
       end # context Example 3
     end # context case 1
+
+    context "when using case 2" do
+      context "when Example 2" do
+        context "when 0.1 0.9 example" do
+          it "computes S properly" do
+            exp = 0.637
+            s   = @semSAFAvgPTco.computeS(@a, @b)
+            s2  = @semBHAvgPTco.computeS(@a, @b)
+            expect(s).to be_within(0.01).of(exp)
+            expect(s2).to be_within(0.01).of(exp)
+          end
+
+          context "when using SAF" do
+            it "computes V properly" do
+              exp = 0.13
+              v = @semSAFAvgPTco.computeV(@a)
+              expect(v).to be_within(0.01).of(exp)
+            end
+          end
+
+          context "when using BH" do
+            it "computes V properly" do
+              exp = 0.44
+              v = @semBHAvgPTco.computeV(@a)
+              expect(v).to be_within(0.01).of(exp)
+            end
+          end
+        end # context 0.1 0.9
+
+        context "when 0.5 0.5 example" do
+          it "computes S properly" do
+            exp = 0.525
+            s   = @semSAFAvgPTco.computeS(@a2, @b2)
+            s2  = @semBHAvgPTco.computeS(@a2, @b2)
+            expect(s).to be_within(0.01).of(exp)
+            expect(s2).to be_within(0.01).of(exp)
+          end
+
+          context "when using SAF" do
+            it "computes V properly" do
+              exp = 0.23
+              v = @semSAFAvgPTco.computeV(@a2)
+              expect(v).to be_within(0.01).of(exp)
+            end
+          end
+
+          context "when using BH" do
+            it "computes V properly" do
+              exp = 0.488
+              v = @semBHAvgPTco.computeV(@a2)
+              expect(v).to be_within(0.01).of(exp)
+            end
+          end
+        end # context 0.5 0.5
+      end # context Example 2
+
+      context "when Example 3" do
+        context "when using Avg aggregator" do
+          it "computes S properly" do
+            expA = 0.699
+            expB = 0.674
+            expC = 0.774
+
+            sA   = @semSAFAvgPTco.computeS(@d3, @a3)
+            sB   = @semSAFAvgPTco.computeS(@d3, @b3)
+            sC   = @semSAFAvgPTco.computeS(@d3, @c3)
+
+            sA2  = @semBHAvgPTco.computeS(@d3, @a3)
+            sB2  = @semBHAvgPTco.computeS(@d3, @b3)
+            sC2  = @semBHAvgPTco.computeS(@d3, @c3)
+
+            expect(sA).to  be_within(0.01).of(expA)
+            expect(sA2).to be_within(0.01).of(expA)
+            expect(sB).to  be_within(0.01).of(expB)
+            expect(sB2).to be_within(0.01).of(expB)
+            expect(sC).to  be_within(0.01).of(expC)
+            expect(sC2).to be_within(0.01).of(expC)
+          end
+
+          it "computes V properly" do
+            expSAF = 0.022
+            expBH  = 0.318
+
+            sSAF = @semSAFAvgPTco.computeV(@d3)
+            sBH  = @semBHAvgPTco.computeV(@d3)
+
+            expect(sSAF).to be_within(0.01).of(expSAF)
+            expect(sBH).to be_within(0.01).of(expBH)
+          end
+        end # context avg
+
+        context "when using Product aggregator" do
+          it "computes S properly" do
+            expA = 0.479
+            expB = 0.448
+            expC = 0.598
+
+            sA   = @semSAFProdPTco.computeS(@d3, @a3)
+            sB   = @semSAFProdPTco.computeS(@d3, @b3)
+            sC   = @semSAFProdPTco.computeS(@d3, @c3)
+
+            sA2  = @semBHProdPTco.computeS(@d3, @a3)
+            sB2  = @semBHProdPTco.computeS(@d3, @b3)
+            sC2  = @semBHProdPTco.computeS(@d3, @c3)
+
+            expect(sA).to  be_within(0.01).of(expA)
+            expect(sA2).to be_within(0.01).of(expA)
+            expect(sB).to  be_within(0.01).of(expB)
+            expect(sB2).to be_within(0.01).of(expB)
+            expect(sC).to  be_within(0.01).of(expC)
+            expect(sC2).to be_within(0.01).of(expC)
+          end
+
+          it "computes V properly" do
+            expSAF = 0.116
+            expBH  = 0.396
+
+            sSAF = @semSAFProdPTco.computeV(@d3)
+            sBH  = @semBHProdPTco.computeV(@d3)
+
+            expect(sSAF).to be_within(0.01).of(expSAF)
+            expect(sBH).to be_within(0.01).of(expBH)
+          end
+        end # context product
+      end # context Example 3
+    end # context case 2
   end # describe
 end # module

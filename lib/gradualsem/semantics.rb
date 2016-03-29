@@ -42,6 +42,14 @@ module Gradualsem
     (val1 + val2) / 2.0
   end
 
+  @@h2_proba_tconorm = -> (val1, val2) do
+    val1 + val2 - val1 * val2
+  end
+
+  @@h2_einstein = -> (val1, val2) do
+    (val1 + val2) / (1.0 + val1 * val2)
+  end
+
   class Semantics
     attr_reader :agg, :g, :h1, :h2
 
