@@ -117,6 +117,17 @@ module Gradualsem
             expect(sC).to  be_within(0.01).of(expC)
             expect(sC2).to be_within(0.01).of(expC)
           end
+
+          it "computes V properly" do
+            expSAF = 0.022
+            expBH  = 0.318
+
+            sSAF = @semSAFAvg.computeV(@d3)
+            sBH  = @semBHAvg.computeV(@d3)
+
+            expect(sSAF).to be_within(0.01).of(expSAF)
+            expect(sBH).to be_within(0.01).of(expBH)
+          end
         end # context avg
 
         context "when using Product aggregator" do
@@ -139,6 +150,17 @@ module Gradualsem
             expect(sB2).to be_within(0.01).of(expB)
             expect(sC).to  be_within(0.01).of(expC)
             expect(sC2).to be_within(0.01).of(expC)
+          end
+
+          it "computes V properly" do
+            expSAF = 0.116
+            expBH  = 0.396
+
+            sSAF = @semSAFProd.computeV(@d3)
+            sBH  = @semBHProd.computeV(@d3)
+
+            expect(sSAF).to be_within(0.01).of(expSAF)
+            expect(sBH).to be_within(0.01).of(expBH)
           end
         end # context product
       end # context Example 3
