@@ -99,8 +99,8 @@ module Gradualsem
         context "when using Avg aggregator" do
           it "computes S properly" do
             expA = 0.699
-            expB = 0.649
-            expC = 0.749
+            expB = 0.674
+            expC = 0.774
 
             sA   = @semSAFAvg.computeS(@d3, @a3)
             sB   = @semSAFAvg.computeS(@d3, @b3)
@@ -117,7 +117,30 @@ module Gradualsem
             expect(sC).to  be_within(0.01).of(expC)
             expect(sC2).to be_within(0.01).of(expC)
           end
-        end
+        end # context avg
+
+        context "when using Product aggregator" do
+          it "computes S properly" do
+            expA = 0.479
+            expB = 0.448
+            expC = 0.598
+
+            sA   = @semSAFProd.computeS(@d3, @a3)
+            sB   = @semSAFProd.computeS(@d3, @b3)
+            sC   = @semSAFProd.computeS(@d3, @c3)
+
+            sA2  = @semBHProd.computeS(@d3, @a3)
+            sB2  = @semBHProd.computeS(@d3, @b3)
+            sC2  = @semBHProd.computeS(@d3, @c3)
+
+            expect(sA).to  be_within(0.01).of(expA)
+            expect(sA2).to be_within(0.01).of(expA)
+            expect(sB).to  be_within(0.01).of(expB)
+            expect(sB2).to be_within(0.01).of(expB)
+            expect(sC).to  be_within(0.01).of(expC)
+            expect(sC2).to be_within(0.01).of(expC)
+          end
+        end # context product
       end # context Example 3
     end # context case 1
   end # describe
