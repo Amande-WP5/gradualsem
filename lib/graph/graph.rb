@@ -18,21 +18,21 @@ module Gradualsem
           end
 
           if line.start_with? "att"
-            line.match(/att\((.*), (.*)\)/).do |m|
+            line.match(/att\((.*), (.*)\)/) do |m|
               @nodes[m[1]].add_attacking(@nodes[m[2]])
               @nodes[m[2]].add_attackers(@nodes[m[1]])
             end
           end
 
           if line.start_with? "support"
-            line.match(/support\((.*), (.*)\)/).do |m|
+            line.match(/support\((.*), (.*)\)/) do |m|
               @nodes[m[1]].add_supporting(@nodes[m[2]])
               @nodes[m[2]].add_supporters(@nodes[m[1]])
             end
           end
 
           if line.start_with? "sim"
-            line.match(/sim\((.*), (.*), (.*)\)/).do |m|
+            line.match(/sim\((.*), (.*), (.*)\)/) do |m|
               sim = m[3].to_f
               @nodes[m[1]].sim[@nodes[m[2]]] = sim
               @nodes[m[2]].sim[@nodes[m[1]]] = sim
@@ -40,6 +40,6 @@ module Gradualsem
           end
         end
       end
-#    end
-#  end
-#end
+    end
+  end
+end

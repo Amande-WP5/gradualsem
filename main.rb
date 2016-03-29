@@ -33,7 +33,7 @@ module Gradualsem
   # h2  = product
 
   # The name of the function as to be given.
-  sem = Gradualsem::Semantics.new(@@agg_sum, @@g_cat, @@h1_cat, @@h2_product)
+  sem = Gradualsem::Semantics.new(@@agg_prod, @@g_cat, @@h1_cat, @@h2_product)
 
   # Computes the value for each argument.
   # The order of computation is at the discretion of the user.
