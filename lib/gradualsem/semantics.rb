@@ -1,7 +1,8 @@
 module Gradualsem
+  EPSILON = 0.001
   # List of functions to be used in the semantics
   @@g_simple = -> (val) do
-    @@g_cat.(val) * (1 - val)
+    1.0 / (1.0 + EPSILON) * (1 - val)
   end
 
   @@h1_proba_tconorm = -> (acc, val) do
@@ -26,6 +27,10 @@ module Gradualsem
 
   @@h2_product = -> (val1, val2) do
     val1 * val2
+  end
+
+  @@h2_avg = -> (val1, val2) do
+    (val1 + val2) / 2.0
   end
 
   class Semantics
